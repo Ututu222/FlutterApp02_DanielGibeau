@@ -15,9 +15,6 @@ class _MyFirstPageState extends State<MyFirstPage> {
       _counter++;
       _msg1 = 'Clicked $_counter times';
     });
-
-    print('Counter is now at $_counter');
-    print('messageAction func now running as Click me button pressed');
   }
 
   void resetAction() {
@@ -29,45 +26,6 @@ class _MyFirstPageState extends State<MyFirstPage> {
 
   @override
   Widget build(BuildContext context) {
-    Object onPressed1() {
-      if (_enabled) {
-        setState(() {
-          if (_counter == 0) {
-            _msg1 = 'Click me';
-          } else {
-            _msg1 = 'Clicked $_counter times';
-          }
-        });
-        print(
-            'onPressed1 returning address of messageAction func but NOT running it');
-        return clickMeAction;
-      } else {
-        setState(() {
-          _msg1 = '';
-        });
-        print('onPressed1 returning NULL');
-        return null;
-      }
-    }
-
-    Object onPressed2() {
-      if (_enabled) {
-        setState(() {
-          _msg2 = 'Reset';
-        });
-        print('onPressed2 returning address of anon func but NOT running it');
-        return resetAction;
-      } else {
-        setState(() {
-          _msg2 = '';
-        });
-        print('onPressed2 returning NULL');
-        return null;
-      }
-    }
-
-    print('The build is being RUN');
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Button Functionality Demo'),
@@ -82,15 +40,18 @@ class _MyFirstPageState extends State<MyFirstPage> {
                 Switch(
                     value: _enabled,
                     onChanged: (bool onChangedValue) {
-                      print('onChangedValue is $onChangedValue');
                       _enabled = onChangedValue;
                       setState(() {
                         if (_enabled) {
-                          _msg1 = 'Enabled';
-                          print('_enabled is true');
+                          if (_counter == 0) {
+                            _msg1 = 'Click me';
+                          } else {
+                            _msg1 = 'Clicked $_counter times';
+                          }
+                          _msg2 = 'Reset';
                         } else {
                           _msg1 = '';
-                          print('_enabled is false');
+                          _msg2 = '';
                         }
                       });
                     }),
@@ -110,7 +71,7 @@ class _MyFirstPageState extends State<MyFirstPage> {
                     highlightColor: Colors.blue,
                     splashColor: Colors.green.shade300,
                     padding: EdgeInsets.all(20.0),
-                    onPressed: onPressed1(),
+                    onPressed: _enabled ? clickMeAction : null,
                     child: Text(_msg1),
                   ),
                 ),
@@ -125,7 +86,7 @@ class _MyFirstPageState extends State<MyFirstPage> {
                     highlightColor: Colors.blue,
                     splashColor: Colors.green.shade300,
                     padding: EdgeInsets.all(20.0),
-                    onPressed: onPressed2(),
+                    onPressed: _enabled ? resetAction : null,
                     child: Text(_msg2),
                   ),
                 ),
