@@ -1,6 +1,6 @@
-# lab_1
+# Flutter App 02
 
-A new Flutter project.
+Daniel Gibeau
 
 ## Getting Started
 
